@@ -1,0 +1,8 @@
+public void updateDoctor(Doctor doctor) {
+    int index = doctors.indexOf(doctor);
+    if (index != -1) {
+        doctors.set(index, doctor);
+        jsonHandler.writeToJson(doctors); // Save changes
+        fireTableDataChanged();
+    }
+}
