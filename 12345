@@ -1,0 +1,24 @@
+public void setupTable(JTable table, CardLayout cardLayout, JPanel container, DoctorTableModel tableModel) {
+    table.setModel(tableModel);
+    table.getColumnModel().getColumn(14).setCellRenderer(new TableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JButton button = new JButton("Edit");
+            return button;
+        }
+    });
+
+    table.getColumnModel().getColumn(14).setCellEditor(new DefaultCellEditor(new JCheckBox()) {
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            JButton button = new JButton("Edit");
+            button.addActionListener(e -> {
+                Doctor selectedDoctor = tableModel.getFilteredDoctors().get(row);
+                DoctorEditorPanel editorPanel = new DoctorEditorPanel(cardLayout, container, tableModel, selectedDoctor);
+                container.add(editorPanel, "Editor");
+                cardLayout.show(container, "Editor");
+            });
+            return button;
+        }
+    });
+}
